@@ -1,7 +1,7 @@
-@(products: List[models.Product], categories: List[models.Category])
+@(products: List[models.Product], categories: List[models.Category], user: models.users.User)
 
 <!-- Pass page title and content {html between braces} to the main view -->
-@main("Products") {
+@main("Products", user) {
   <!-- HTML content for the index view -->
   <div class="row">
       <div class="col-sm-2">
@@ -50,6 +50,8 @@
                   <td>@p.getStock</td>
                   <td>&euro; @("%.2f".format(p.getPrice))</td>
 
+
+                  @if(user != null){
                   <!-- Edit product button -->
                   <td>
                       <a href="@routes.HomeController.updateProduct(p.getId)" class="btn-xs btn-danger">
@@ -62,15 +64,18 @@
                         <span class="glyphicon glyphicon-trash"></span>
                       </a>
                   </td>
+                  }
 				    </tr>
 					} <!-- End of For loop -->
           </tbody>
         </table>
+        @if(user != null){
         <p>
           <a href="@routes.HomeController.addProduct()">
             <button class="btn btn-primary">Add a Product</button>
           </a>
         </p>
+        }
       </div>
   </div>
 
